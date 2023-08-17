@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type InitialStateType = {
+  mode: string;
+  profile: Record<string, string> | null;
+};
+
+const initialState: InitialStateType = {
   mode: "dark",
+  profile: null,
 };
 
 export const globalSlice = createSlice({
@@ -11,9 +17,12 @@ export const globalSlice = createSlice({
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
+    setProfile: (state, action) => {
+      state.profile = action.payload;
+    },
   },
 });
 
-export const { setMode } = globalSlice.actions;
+export const { setMode, setProfile } = globalSlice.actions;
 
 export default globalSlice.reducer;

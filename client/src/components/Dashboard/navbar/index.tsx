@@ -10,7 +10,7 @@ import {
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { setMode } from "@/state";
+import { setMode, setProfile } from "@/state";
 import {
   AppBar,
   Button,
@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import FlexBetween from "@/components/core/FlexBetween";
 import useTheme from "@/hooks/useThemeWithCustomTS";
+import { authAxios } from "@/utils/axios";
 
 type IProps = {
   user: any;
@@ -42,6 +43,12 @@ const Navbar = ({ user, setIsSidebarOpen, isMobile }: IProps) => {
   ) => setAnchorEl(event.target);
 
   const handleClose = () => setAnchorEl(null);
+
+  React.useEffect(() => {
+    authAxios("/auth/profile").then((resp) =>
+      dispatch(setProfile(resp.data.data))
+    );
+  }, [dispatch]);
 
   return (
     <AppBar

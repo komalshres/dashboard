@@ -9,9 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardLayout({ children }: ChildrenType) {
-  return (
-    <Main>
-      <Layout>{children}</Layout>
-    </Main>
-  );
+  return <Layout>{children}</Layout>;
 }

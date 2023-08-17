@@ -21,6 +21,7 @@ import {
 import FlexBetween from "@/components/core/FlexBetween";
 import { navItems } from "./navItems";
 import useTheme from "@/hooks/useThemeWithCustomTS";
+import { useSelector } from "react-redux";
 
 type IProps = {
   user: any;
@@ -41,12 +42,6 @@ const Sidebar = ({
   const { theme } = useTheme();
 
   const segment = useSelectedLayoutSegment();
-
-  console.log(segment);
-
-  //   useEffect(() => {
-  //     setActive(pathname.substring(1));
-  //   }, [pathname]);
 
   return (
     <Box component="nav" sx={{ boxShadow: 3 }}>

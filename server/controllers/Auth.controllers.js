@@ -57,14 +57,14 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   try {
     if (req.method === "POST") {
-      const { username, password, ...rest } = req.body;
+      const { email, password, ...rest } = req.body;
       if (Object.keys(rest).length) {
         throw new Error("Invalid key");
       }
 
-      if (!username || !password) {
+      if (!email || !password) {
         const missingKeys = [];
-        if (!username) missingKeys.push("Username");
+        if (!email) missingKeys.push("Email");
         if (!password) missingKeys.push("Password");
 
         throw new Error(
@@ -74,10 +74,10 @@ export async function loginUser(req, res) {
         );
       }
 
-      const user = await UserModel.findOne({ username });
+      const user = await UserModel.findOne({ email });
 
       if (!user) {
-        throw new Error("Invalid Username");
+        throw new Error("Invalid Email");
       }
 
       const checkPassword = await bcrypt.compare(password, user.password);
@@ -89,7 +89,7 @@ export async function loginUser(req, res) {
       const token = jwt.sign(
         {
           userId: user._id,
-          username: user.username,
+          username: user.email,
         },
         process.env.JWT_SECRET,
         { expiresIn: "24h" }
@@ -97,7 +97,7 @@ export async function loginUser(req, res) {
 
       res
         .status(200)
-        .json({ message: "User logged in successfully", username, token });
+        .json({ message: "User logged in successfully", email, token });
     } else if (req.method === "GET") {
       const { username } = req.params;
 
